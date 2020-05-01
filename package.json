@@ -1,0 +1,54 @@
+{
+  "name": "bot-trt3",
+  "version": "1.0.0",
+  "description": "bot data miner trt",
+  "main": "dist/server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "env": "export $(cat .env | xargs)",
+    "build": "tsc",
+    "clean": "tsc --build --clean",
+    "start": "node dist/server.js",
+    "dev": "tsc && node dist/server.js",
+    "lint": "eslint --fix src/**/*.ts",
+    "test": "NODE_ENV=test mocha --recursive -r ts-node/register test/**/*.spec.ts --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eugenio-cunha/bot-trt3.git"
+  },
+  "keywords": [
+    "data",
+    "miner"
+  ],
+  "author": "Eugenio Cunha <eugenio.cunha@ymail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eugenio-cunha/bot-trt3/issues"
+  },
+  "homepage": "https://github.com/eugenio-cunha/bot-trt3#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/mongodb": "^3.5.14",
+    "@types/node": "^13.13.4",
+    "@types/node-fetch": "^2.5.7",
+    "@types/puppeteer": "^2.0.1",
+    "@types/redis": "^2.8.18",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.2",
+    "node-fetch": "^2.6.0",
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.7",
+    "puppeteer": "^3.0.2",
+    "redis": "^3.0.2"
+  }
+}
