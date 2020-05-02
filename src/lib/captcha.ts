@@ -3,9 +3,9 @@ import { accessToken } from '../config';
 
 export default class Captcha {
 
-  public static async solve(base64: string): Promise<string | null> {
+  public static async solve(base64: string): Promise<string> {
     const id = await this.send(base64);
-    if (!id) return null;
+    if (!id) return '';
 
     const attempts = Array(10).fill(this.quest);
     for (const attempt of attempts) {
@@ -15,7 +15,7 @@ export default class Captcha {
       }
       await this.delay(500);
     }
-    return null;
+    return '';
   }
 
   private static async send(base64: string): Promise<string | null> {

@@ -7,11 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "env": "export $(cat .env | xargs)",
-    "build": "tsc",
-    "clean": "tsc --build --clean",
+    "build": "rm -rf dist/* && tsc",
     "start": "node dist/server.js",
-    "dev": "tsc && node dist/server.js",
+    "dev": "npm run build && node dist/server.js",
     "lint": "eslint --fix src/**/*.ts",
     "test": "NODE_ENV=test mocha --recursive -r ts-node/register test/**/*.spec.ts --exit"
   },

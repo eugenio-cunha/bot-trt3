@@ -1,11 +1,7 @@
 import { mongodbUrl } from '../config';
-import { Document } from '../interfaces';
+import { Doc } from '../interfaces';
 import { connect, MongoClient, ObjectID } from 'mongodb';
 
-/**
- * @class Mongo
- * @description Classe Singleton de conexão Mongo
- */
 class Mongo {
 
   private url: string;
@@ -19,11 +15,6 @@ class Mongo {
     this.handler = null;
   }
 
-  /**
-   * @description Obtem um instância singleton de conexção com Mongo
-   *
-   * @returns {Mongo} Cliente de conexão Mongo
-   */
   public static getInstance(): Mongo {
     if (!Mongo.instance) {
 
@@ -60,31 +51,20 @@ class Mongo {
     return { collection: (name: string) => db.collection(name) }
   }
 
-  /**
-   * @description Insere um novo bloco na collection blockchain
-   *
-   * @param {String} database nome da base dados 
-   * @param {String} collection nome da collection 
-   * @param {Document} data documento
-   *
-   * @returns {Promise<string>} id do documento
-   */
-  public async insert(database: string, collection: string, document: Document): Promise<string> {
+  public async insert(database: string, collection: string, doc: Doc): Promise<string> {
     const db = await this.getDB(database);
-    const { insertedId } = await db.collection(collection).insertOne(document);
+    const { insertedId } = await db.collection(collection).insertOne(doc);
 
     return insertedId;
   }
 
-  /**
-   * @description Encontra um documento
-   *
-   * @param {String} database nome da base dados
-   * @param {String} key nome da chave
-   * @param {String} value valor da pesquisa
-   *
-   * @returns {Promise<Null | Document>} retorna um document ou vazio caso não exista
-   */
+  public async update(database: string, collection: string, query: { [key: string]: any }, doc: Doc): Promise<number> {
+    const db = await this.getDB(database);
+    const { modifiedCount } = await db.collection(collection).updateOne(query, { $set: doc });
+
+    return modifiedCount;
+  }
+
   public async find(database: string, collection: string, id: string): Promise<any> {
     const db = await this.getDB(database);
 
@@ -95,15 +75,6 @@ class Mongo {
     return result || null;
   }
 
-  /**
-   * @description Executa uma agregação
-   *
-   * @param {String} database nome da base dados
-   * @param {String} collection nome da coleção
-   * @param {String} pipeline pipeline da agregação
-   *
-   * @returns {Promise<Null | Document>} retorna um document ou vazio caso não exista
-   */
   public async aggregate(database: string, collection: string, pipeline: any[]): Promise<any> {
     const db = await this.getDB(database);
 
@@ -112,7 +83,7 @@ class Mongo {
     return result || null;
   }
 
-  public id(value: string): ObjectID {
+  public objectId(value: string): ObjectID {
     return new ObjectID(value);
   }
 }
