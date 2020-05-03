@@ -6,9 +6,12 @@
 
 ### Variáveis de ambiente
 ```env
+TARGET=trt3                                    (nome do robô)
 NODE_ENV=development                           (ambiente da aplicação)
 SOCKET_PORT=9018                               (porta do socket que o robô vai escutar)
-MONGODB_URL=mongodb://127.0.0.1:27017/${db}    (url de conexão com MongoDB) 
+SOCKET_HOST=127.0.0.1                          (host do socket que o robô vai escutar)
+MONGODB_HOST=127.0.0.1                         (host de conexão com MongoDB) 
+MONGODB_PORT=27017                             (port de conexão com MongoDB) 
 ACCESS_TOKEN=******************************    (token de acesso ao serviço 2captcha.com)
 ```
 

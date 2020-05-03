@@ -1,5 +1,5 @@
-import { socketUrl, env } from '../config';
 import { connect } from 'socket.io-client';
+import { env, socketHost, socketPort } from '../config';
 
 class Notification {
 
@@ -7,14 +7,14 @@ class Notification {
   private environment: string;
   private static instance: Notification;
 
-  private constructor(environment: string, url: string) {
-    this.client = connect(url);
+  private constructor(environment: string, host: string, port: string) {
+    this.client = connect(`http://${host}:${port}`);
     this.environment = environment;
   }
 
-  public static getInstance(environment: string, url: string): Notification {
+  public static getInstance(environment: string, host: string, port: string): Notification {
     if (!Notification.instance) {
-      Notification.instance = new Notification(environment, url);
+      Notification.instance = new Notification(environment, host, port);
     }
 
     return Notification.instance;
@@ -32,4 +32,4 @@ class Notification {
   }
 }
 
-export default Notification.getInstance(env, socketUrl);
+export default Notification.getInstance(env, socketHost, socketPort);

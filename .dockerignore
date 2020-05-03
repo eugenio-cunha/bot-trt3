@@ -1,0 +1,9 @@
+node_modules/
+test/
+dist/
+.git/
+.env
+.gitignore
+package-lock.json
+tslint.json
+README.md

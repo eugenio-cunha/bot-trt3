@@ -1,5 +1,5 @@
-import { mongodbUrl } from '../config';
 import { Doc } from '../interfaces';
+import { mongodbPort, mongodbHost } from '../config';
 import { connect, MongoClient, ObjectID } from 'mongodb';
 
 class Mongo {
@@ -9,20 +9,20 @@ class Mongo {
   private client: MongoClient | null;
   private handler: NodeJS.Timeout | null;
 
-  private constructor(url: string) {
-    this.url = url;
+  private constructor(host: string, port: string) {
     this.client = null;
     this.handler = null;
+    this.url = `mongodb://${host}:${port}/\${db}`;
   }
 
-  public static getInstance(): Mongo {
+  public static getInstance(host: string, port: string): Mongo {
     if (!Mongo.instance) {
 
-      if (!mongodbUrl) {
+      if (!host || !port) {
         throw new Error('Um dos parâmetros de conexão do Mongo tem um valor inválido.');
       }
 
-      Mongo.instance = new Mongo(mongodbUrl);
+      Mongo.instance = new Mongo(host, port);
     }
 
     return Mongo.instance;
@@ -88,4 +88,4 @@ class Mongo {
   }
 }
 
-export default Mongo.getInstance();
+export default Mongo.getInstance(mongodbHost, mongodbPort);
